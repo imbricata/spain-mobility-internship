@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase04 results</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; color: #111;
+    font-family: -apple-system, Arial, sans-serif; }
+  .slide { min-height: 100vh; box-sizing: border-box; padding: 6vh 8vw;
+    scroll-snap-align: start; border-bottom: 1px solid #eee; display: flex;
+    flex-direction: column; justify-content: center; }
+  body { scroll-snap-type: y mandatory; overflow-y: scroll; }
+  h1 { font-size: 2.6rem; margin: 0; }
+  h2 { font-size: 1.8rem; margin: 0 0 .6em; border-bottom: 2px solid #111;
+    padding-bottom: .2em; }
+  table { border-collapse: collapse; font-size: 1.15rem; margin: .4em 0; }
+  th, td { border: 1px solid #999; padding: .45em .9em; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: #f2f2f2; }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <h1>Phase04</h1>
+</section>
+
+<section class="slide">
+  <h2>Base gravity by income band &mdash; working age (25&ndash;65)</h2>
+  <table>
+    <tr><th>income (&euro;000)</th><th>n</th><th>intercept</th><th>&beta; pop_i</th><th>&beta; pop_j</th><th>&gamma;</th><th>R&sup2;</th></tr>
+    <tr><td>&lt;10</td><td>468,914</td><td>&minus;3.432</td><td>0.265</td><td>0.270</td><td>0.670</td><td>0.2875</td></tr>
+    <tr><td>10&ndash;15</td><td>1,615,153</td><td>&minus;4.965</td><td>0.544</td><td>0.557</td><td>1.320</td><td>0.6107</td></tr>
+    <tr><td>&gt;15</td><td>847,432</td><td>&minus;6.508</td><td>0.531</td><td>0.549</td><td>1.058</td><td>0.5202</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Same, on common OD pairs (present in all 3 bands)</h2>
+  <table>
+    <tr><th>income (&euro;000)</th><th>n</th><th>intercept</th><th>&beta; pop_i</th><th>&beta; pop_j</th><th>&gamma;</th><th>R&sup2;</th></tr>
+    <tr><td>&lt;10</td><td>211,822</td><td>&minus;3.174</td><td>0.263</td><td>0.266</td><td>0.716</td><td>0.1685</td></tr>
+    <tr><td>10&ndash;15</td><td>211,822</td><td>&minus;4.236</td><td>0.623</td><td>0.632</td><td>1.651</td><td>0.6476</td></tr>
+    <tr><td>&gt;15</td><td>211,822</td><td>&minus;7.930</td><td>0.684</td><td>0.695</td><td>1.406</td><td>0.5319</td></tr>
+  </table>
+</section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0;
+  function go(n) { i = Math.max(0, Math.min(slides.length - 1, n));
+    slides[i].scrollIntoView({ behavior: 'smooth' }); }
+  document.addEventListener('keydown', e => {
+    if (['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); go(i+1); }
+    if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key))         { e.preventDefault(); go(i-1); }
+  });
+</script>
+</body>
+</html>

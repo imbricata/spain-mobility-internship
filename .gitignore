@@ -1,0 +1,18 @@
+# Data — 7.8 GB of MITMA parquet, geometries, POI and INE extracts.
+# Rebuilt by scripts/prep_external_data.py + the download steps in notebooks/phase01.
+data/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Local Claude Code permissions (machine-specific)
+.claude/settings.local.json
+
+# Credentials
+*.token
+.hf_token

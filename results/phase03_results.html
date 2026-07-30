@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase03 results</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; color: #111;
+    font-family: -apple-system, Arial, sans-serif; }
+  .slide { min-height: 100vh; box-sizing: border-box; padding: 6vh 8vw;
+    scroll-snap-align: start; border-bottom: 1px solid #eee; display: flex;
+    flex-direction: column; justify-content: center; }
+  body { scroll-snap-type: y mandatory; overflow-y: scroll; }
+  h1 { font-size: 2.6rem; margin: 0; }
+  h2 { font-size: 1.8rem; margin: 0 0 .6em; border-bottom: 2px solid #111;
+    padding-bottom: .2em; }
+  table { border-collapse: collapse; font-size: 1.15rem; margin: .4em 0; }
+  th, td { border: 1px solid #999; padding: .45em .9em; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: #f2f2f2; }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <h1>Phase03</h1>
+</section>
+
+<section class="slide">
+  <h2>Pre vs Post — overall</h2>
+  <table>
+    <tr><th>year</th><th>n</th><th>β_Pi</th><th>β_Pj</th><th>γ</th><th>R²</th><th>Δγ</th></tr>
+    <tr><td>pre 2020</td><td>702,544</td><td>0.562</td><td>0.566</td><td>1.853</td><td>0.662</td><td>—</td></tr>
+    <tr><td>post 2023</td><td>702,544</td><td>0.661</td><td>0.658</td><td>2.035</td><td>0.705</td><td>+0.182</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Pre vs Post — weekday vs weekend</h2>
+  <table>
+    <tr><th>day type</th><th>pre γ</th><th>post γ</th><th>Δγ</th><th>n</th></tr>
+    <tr><td>weekday</td><td>1.806</td><td>1.995</td><td>+0.189</td><td>592,834</td></tr>
+    <tr><td>weekend</td><td>1.720</td><td>1.899</td><td>+0.179</td><td>397,534</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Pop vs POI — counts</h2>
+  <table>
+    <tr><td>Spain POIs</td><td>1,925,251</td></tr>
+    <tr><td>districts ≥1 POI</td><td>3,754 / 3,792</td></tr>
+    <tr><td>district pairs</td><td>3,359,772</td></tr>
+    <tr><td>model rows (n)</td><td>3,126,370</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Pop vs POI — results</h2>
+  <table>
+    <tr><th>mass</th><th>β_i</th><th>β_j</th><th>γ</th><th>R²</th><th>AIC</th></tr>
+    <tr><td>population (pop_i, pop_j)</td><td>0.526</td><td>0.530</td><td>1.586</td><td>0.661</td><td>9.707M</td></tr>
+    <tr><td>POI-attraction (pop_i, poi_j)</td><td>0.529</td><td>0.465</td><td>1.601</td><td>0.665</td><td>9.674M</td></tr>
+  </table>
+</section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let i = 0;
+  function go(n) { i = Math.max(0, Math.min(slides.length - 1, n));
+    slides[i].scrollIntoView({ behavior: 'smooth' }); }
+  document.addEventListener('keydown', e => {
+    if (['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); go(i+1); }
+    if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key))         { e.preventDefault(); go(i-1); }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+name: spain-mobility
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pandas
+  - numpy
+  - geopandas
+  - shapely
+  - pyproj
+  - fiona
+  - rtree
+  - matplotlib
+  - seaborn
+  - contextily
+  - networkx
+  - scipy
+  - statsmodels
+  - scikit-learn
+  - jupyterlab
+  - ipykernel
+  - tqdm
+  - requests
+  - pyarrow
+  - openpyxl
+  - pip:
+      - pySpainMobility
