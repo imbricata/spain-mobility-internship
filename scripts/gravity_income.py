@@ -22,7 +22,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
-DATA = Path("/Users/theocoronges/Documents/internship2026/data")
+DATA = Path(__file__).resolve().parents[1] / "data"
 GEO  = DATA / "geometries"
 OUT  = Path.home() / "Desktop" / "gravity_slides"
 OUT.mkdir(parents=True, exist_ok=True)

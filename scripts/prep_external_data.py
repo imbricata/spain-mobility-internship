@@ -10,9 +10,10 @@ Outputs (all in data/):
     paro/paro_municipios_2025-03.csv  municipio_ine, total_paro  (registered unemployed, Mar 2025)
 """
 import glob
+from pathlib import Path
 import pandas as pd
 
-DATA = "/Users/theocoronges/Documents/internship2026/data"
+DATA = str(Path(__file__).resolve().parents[1] / "data")
 
 
 def _int_es(s):

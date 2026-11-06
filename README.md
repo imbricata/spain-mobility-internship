@@ -1,59 +1,52 @@
-# Spain Mobility — internship 2026
+# Spain Mobility & Socioeconomic Segregation
 
-Analysis of Spanish origin–destination mobility flows (MITMA OpenData Movilidad),
-combined with INE income/demographic data and Foursquare POIs.
+Empirical analysis of Spanish origin–destination mobility flows (MITMA OpenData Movilidad, 3.11B trips across 3,792 districts and 3.36M directed OD pairs), linked with census-section income & demographics (INE), registered unemployment (SEPE), and points of interest (Foursquare OS Places).
 
-Supervisor: Esteban Moro. Original brief: [`docs/project.md`](docs/project.md).
+Research internship at Northeastern University (supervised by Prof. Esteban Moro). Original brief: [`docs/project.md`](docs/project.md).
 
-## Layout
+## Key Findings
 
-| path | contents |
+1. **Experienced income diversity vs. segregation:** Higher-income destinations exhibit *more* balanced visitor income distributions and lower divergence from the national baseline (Jensen–Shannon divergence $\rho \approx -0.37$); lower-income and peripheral districts are the most socioeconomically selective.
+2. **Distance-decayed income assortativity:** Mobility is strongly income-assortative at short range ($r \approx 0.49$ under 25 km, representing ~90% of trips) and decays toward zero beyond 100 km. Both log-OLS and Poisson Pseudo-Maximum Likelihood (PPML) gravity specifications confirm significant friction in cross-income travel controlling for physical distance.
+3. **Destination entropy & unemployment:** Higher Shannon entropy and Pielou evenness of outgoing resident mobility fluxes correlate with lower working-age unemployment ($\rho \approx -0.15$), independent of district income.
+
+## Repository Layout
+
+| Path | Description |
 |---|---|
-| `notebooks/` | `phase01`–`phase05`, run in order |
-| `scripts/` | `prep_external_data.py` (INE raw → section-level CSVs), `build_phase05.py` (headless phase05 rerun), `build_pptx.py` (deck → pptx) |
-| `results/` | keyboard-navigable HTML slide decks; `phase05_results_v2.html` is current |
-| `docs/` | project brief |
-| `data/` | not in git — see below |
+| `notebooks/` | `phase01`–`phase05` and `entropy.ipynb` (spatial entropy, JSD, and gravity decompositions) |
+| `scripts/` | `prep_external_data.py` (INE/SEPE ingestion), `gravity_income.py` (OLS & PPML gravity models with income distance), `eda_plots.py`, `build_phase05.py`, `build_pptx.py` |
+| `results/` | Self-contained HTML presentation decks (`phase05_results_v2.html` is the latest) |
+| `docs/` | Project brief and research questions |
+| `data/` | Git-ignored (~7.8 GB of derived MITMA parquet, geometries, POI, and INE/SEPE tables) |
 
 ## Notebooks
 
-| | topic |
+| Notebook | Scope |
 |---|---|
-| `phase01` | download, load, top origins/destinations, Madrid, temporal, first gravity model |
-| `phase02` | weekday vs weekend, trip purpose |
-| `phase03` | common-unit map, fixed geometry, gravity overall + by district, POIs vs population |
-| `phase04` | POIs by type, gravity by age × income (4×3 grid), common-OD-pair version |
-| `phase05` | income deciles, experienced income diversity/selectivity, income assortativity, unemployment |
+| `phase01` | MITMA OD ingestion, top corridors, Madrid spatial structure, temporal profiles, baseline gravity model |
+| `phase02` | Weekday vs. weekend dynamics and trip purpose decomposition |
+| `phase03` | v1 (2020) vs. v2 (2023) zone harmonization, common-unit crosswalks, district-level gravity, POI scaling |
+| `phase04` | POI category breakdown and 4×3 age × income stratified gravity elasticities |
+| `phase05` | Census-section income deciles, experienced income diversity (Shannon entropy & JSD), assortativity, unemployment |
+| `entropy` | Normalized spatial entropy within reachable radius ($S_{50}$), destination selectivity, and robustness checks |
 
-### Current findings (phase05, March 2025: 3,792 districts, 3.36M directed OD pairs, 3.11B trips)
+## Environment & Reproducibility
 
-1. Higher-income destinations are *less* segregated — visitor mix is more balanced and closer
-   to the national mix (JSD ρ≈−0.37, the stronger signal); poorer/peripheral places are the
-   selective ones.
-2. Mobility is income-assortative but only locally (r≈0.47 overall, ≈0.49 under 25 km,
-   ≈0 beyond 100 km).
-3. Evener mobility fluxes ↔ lower working-age unemployment, independent of income.
-
-## Environment
-
-```
-conda env create -f environment.yml   # env name: spain-mobility
+```bash
+conda env create -f environment.yml   # creates env: spain-mobility
+conda activate spain-mobility
+python scripts/prep_external_data.py
 ```
 
-## Data
+### Data Layout (`data/`, git-ignored)
 
-`data/` is gitignored (7.8 GB). It holds derived parquet plus small geometry/POI/INE extracts:
-
-| dir | contents |
+| Directory | Contents |
 |---|---|
-| `recent_2025-03/` | March 2025 OD parquet, plus age×income variant and OD-pair cache |
-| `early_2022-01/` | January 2022 OD parquet |
-| `od/` | four October weeks, 2022–2025 (activity + social parquet) |
-| `covid_comparison/` | pre (Feb–Mar 2020, v1) and post (Feb–Mar 2023, v2) parquet |
-| `geometries/` | MITMA district shapes, INE↔MITMA crosswalks, population |
-| `poi/` | Foursquare OS Places, Spain |
-| `renta/`, `demo/`, `paro/` | INE income, population/working-age, unemployment |
-
-The raw MITMA `.csv.gz` downloads and INE `raw/` CSVs were deleted after being converted —
-every one is reproducible from the parquet build steps in the notebooks and
-`scripts/prep_external_data.py`.
+| `recent_2025-03/` | March 2025 district OD parquet, age × income tables, and OD-pair cache |
+| `early_2022-01/` | January 2022 district OD parquet |
+| `od/` | October benchmark weeks across 2022–2025 (activity & sociodemographic parquet) |
+| `covid_comparison/` | Pre-COVID (Feb–Mar 2020, v1) and post-COVID (Feb–Mar 2023, v2) OD parquet |
+| `geometries/` | MITMA district polygons, INE↔MITMA crosswalks, and population weights |
+| `poi/` | Foursquare OS Places extracts for Spain |
+| `renta/`, `demo/`, `paro/` | INE census-section income & age structure (2023), SEPE municipal unemployment (Mar 2025) |

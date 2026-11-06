@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import statsmodels.formula.api as smf
 from scipy.stats import spearmanr
 
-DATA = Path("/Users/theocoronges/Documents/internship2026/data")
+DATA = Path("../data")
 GEO  = DATA / "geometries"
 REC_OD = DATA / "recent_2025-03" / "Viajes_distritos_2025-03_v2.parquet"   # full month, distrito level
 K = 10   # number of income groups (deciles) used for the income-mix entropy
@@ -290,6 +290,7 @@ md(r"""
 nb = new_notebook(cells=cells, metadata={
     "kernelspec": {"display_name": "spain-mobility", "language": "python", "name": "spain-mobility"},
     "language_info": {"name": "python"}})
-out = "/Users/theocoronges/Documents/internship2026/phase05.ipynb"
+from pathlib import Path
+out = Path(__file__).resolve().parents[1] / "notebooks" / "phase05.ipynb"
 nbf.write(nb, out)
 print("wrote", out, "with", len(cells), "cells")

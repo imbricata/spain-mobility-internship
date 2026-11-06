@@ -12,7 +12,7 @@ import geopandas as gpd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-DATA = Path("/Users/theocoronges/Documents/internship2026/data")
+DATA = Path(__file__).resolve().parents[1] / "data"
 GEO  = DATA / "geometries"
 OUT  = Path.home() / "Desktop" / "mobility_eda"
 OUT.mkdir(parents=True, exist_ok=True)

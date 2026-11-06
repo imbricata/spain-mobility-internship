@@ -115,6 +115,7 @@ table_slide("Trip spread vs unemployment and income",
     ["distinct destinations", "0.00", "+0.27"],
 ])
 
-OUT = "/Users/theocoronges/Desktop/phase05_results.pptx"
+from pathlib import Path
+OUT = Path(__file__).resolve().parents[1] / "results" / "phase05_results.pptx"
 prs.save(OUT)
 print("saved", OUT, "with", len(prs.slides._sldIdLst), "slides")
